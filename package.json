@@ -73,7 +73,6 @@
     "apidoc-postman": "0.0.92",
     "babel-eslint": "^10.0.2",
     "eslint": "^6.0.1",
-    "eslint-config-imbudhiraja": "^1.0.4",
     "husky": "^3.0.0",
     "lint-staged": "^9.2.0",
     "nodemon": "^2.0.2",
