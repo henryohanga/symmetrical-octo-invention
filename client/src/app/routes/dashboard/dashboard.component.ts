@@ -10,7 +10,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit {
-  isVisible = false;
+  isEditModalVisible = false;
+  isEditLoading = false;
+  isNewLoading = false;
+  isNewModalVisible = false;
   allmanufacturers: any[]
   currentMeter = {
     "_id": "",
@@ -28,38 +31,24 @@ export class DashboardComponent implements OnInit {
   scroll = { y: '330px' };
   columns: STColumn[] = [
     { title: 'id', index: '_id', type: 'checkbox' },
-    // { title: 'Avatar', index: 'picture.thumbnail', type: 'img', width: 80 },
     {
       title: 'Serial',
       index: 'serial',
-      width: 150,
-      // format: item => `${item.name.first} ${item.name.last}`,
-      // type: 'link',
-      // click: item => this.message.info(`${item.name.first}`),
+      width: 150
     },
     { title: 'ManufactureId', index: 'manufacturer_id' },
     {
       title: 'Description',
       index: 'description',
-      // type: 'yn',
-      // yn: {
-      //   truth: 'female',
-      //   yes: '男',
-      //   no: '女',
-      //   mode: 'text',
-      // },
       width: 120,
     },
-    // { title: 'CreatedAt', index: 'created_at',type: 'date'},
     { title: 'Last Updated', index: 'updated_at', type: 'date'},
     {
       title: 'Actions',
-      // width: 120,
       buttons: [
         {
           text: 'Edit',
-          click: item => this.showModal(item),
-          if: item => item.gender === 'female',
+          click: item => this.showEditModal(item),
         },
         {
           text: 'Delete',
@@ -89,20 +78,41 @@ export class DashboardComponent implements OnInit {
   fullChange(val: boolean) {
     this.scroll = val ? { y: '350px' } : { y: '230px' };
   }
-  showModal(item): void {
+  showEditModal(item): void {
     this.currentMeter = item
     this.validateForm.controls.serialno.setValue(item.serial)
     this.validateForm.controls.description.setValue(item.description)
     this.validateForm.controls.manufacturer_id.setValue(item.manufacturer_id)
-    this.isVisible = true;
+    this.isEditModalVisible = true;
+  }
+  showNewModal(): void {
+    this.currentMeter = {
+      "_id": "",
+      "created_at": "",
+      "updated_at": "",
+      "description": "",
+      "manufacturer_id": "",
+      "serial":"",
+    }
+    this.validateForm.controls.serialno.setValue("")
+    this.validateForm.controls.description.setValue("")
+    this.validateForm.controls.manufacturer_id.setValue("")
+    this.isNewModalVisible = true;
   }
 
-  handleOk(): void {
-    this.isVisible = false;
+  handleEditOk(): void {
+    this.isEditModalVisible = false;
   }
 
-  handleCancel(): void {
-    this.isVisible = false;
+  handleEditCancel(): void {
+    this.isEditModalVisible = false;
+  }
+  handleNewOk(): void {
+    this.isNewModalVisible = false;
+  }
+
+  handleNewCancel(): void {
+    this.isNewModalVisible = false;
   }
 
   // Fetch all Smart Meters
@@ -118,8 +128,6 @@ export class DashboardComponent implements OnInit {
     });
     this.message.info(`Meter ${id} Deleted`)
   }
-
-
   fetchManufacturers() {
     this.http.get('http://localhost:3001/v1/manufacturers/').subscribe((res: any[]) => {
     console.log(res)

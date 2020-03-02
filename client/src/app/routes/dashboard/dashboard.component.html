@@ -9,7 +9,7 @@
             </se>
             <se>
               <button nz-button [nzType]="'primary'" (click)="st.load()" [nzLoading]="http.loading">Search</button>
-              <button nz-button (click)="st.load({ _allow_anonymous: true })" [disabled]="http.loading">Clear</button>
+              <button nz-button [disabled]="http.loading">Clear</button>
             </se>
           </form>
         </div>
@@ -27,6 +27,8 @@
               </ul>
             </nz-dropdown-menu>
             <button nz-button [nzType]="'default'" full-toggle class="ml-sm">Full</button>
+            <button nz-button [nzType]="'default'" full-toggle class="ml-sm" (click)="showNewModal()">Add Meter</button>
+
           </div>
         </div>
       </div>
@@ -40,14 +42,14 @@
         [columns]="columns"
         [scroll]="scroll"
       >
-        <ng-template st-row="events" let-item let-index="index">
+        <ng-template st-row="smartmeters" let-item let-index="index">
           <g2-mini-bar
             height="15"
             theme="mini"
             color="#999"
             borderWidth="3"
             [padding]="[0, 0, 0, 0]"
-            [data]="events"
+            [data]="smartmeters"
             tooltipType="mini"
           ></g2-mini-bar>
         </ng-template>
@@ -55,13 +57,13 @@
     </nz-card>
   </full-content>
   <nz-modal
-  [(nzVisible)]="isVisible"
+  [(nzVisible)]="isEditModalVisible"
   nzTitle="Edit Smart Meter"
-  (nzOnCancel)="handleCancel()"
-  (nzOnOk)="handleOk()"
+  (nzOnCancel)="handleEditCancel()"
+  (nzOnOk)="handleEditOk()"
   [nzFooter]="modalFooter"
   >
-      <form nz-form [formGroup]="validateForm" (ngSubmit)="updateForm()">
+      <form nz-form [formGroup]="validateForm">
         <nz-form-item>
           <nz-form-control nzErrorTip="Please input serial number!">
             <nz-input-group nzPrefixIcon="info">
@@ -85,7 +87,42 @@
         </nz-form-item>
       </form>
       <ng-template #modalFooter>
-        <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
-        <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading">Update</button>
+        <button nz-button nzType="default" (click)="handleEditCancel()">Cancel</button>
+        <button nz-button nzType="primary" (click)="handleEditOk()" [nzLoading]="isEditLoading">Update</button>
+      </ng-template>
+  </nz-modal>
+  <nz-modal
+  [(nzVisible)]="isNewModalVisible"
+  nzTitle="Add Smart Meter"
+  (nzOnCancel)="handleNewCancel()"
+  (nzOnOk)="handleNewOk()"
+  [nzFooter]="modalFooter"
+  >
+      <form nz-form [formGroup]="validateForm">
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please input serial number!">
+            <nz-input-group nzPrefixIcon="info">
+              <input type="text" nz-input formControlName="serialno" placeholder="Serial No." />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please input Description">
+            <nz-input-group nzPrefixIcon="edit">
+              <input type="text" nz-input formControlName="description" placeholder="Description." />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please select manufacturer">
+            <nz-select formControlName="manufacturer_id" nzAllowClear nzPlaceHolder="Select manufacturer">
+              <nz-option *ngFor="let manufacturer of allmanufacturers" [nzValue]="manufacturer._id" [nzLabel]="manufacturer.name"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+      <ng-template #modalFooter>
+        <button nz-button nzType="default" (click)="handleNewCancel()">Cancel</button>
+        <button nz-button nzType="primary" (click)="handleNewOk()" [nzLoading]="isNewLoading">Create</button>
       </ng-template>
   </nz-modal>
