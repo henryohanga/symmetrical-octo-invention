@@ -79,9 +79,7 @@
         <nz-form-item>
           <nz-form-control nzErrorTip="Please select manufacturer">
             <nz-select formControlName="manufacturer_id" nzAllowClear nzPlaceHolder="Select manufacturer">
-              <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-              <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
-              <nz-option nzValue="disabled" nzLabel="Disabled" nzDisabled></nz-option>
+              <nz-option *ngFor="let manufacturer of allmanufacturers" [nzValue]="manufacturer._id" [nzLabel]="manufacturer.name"></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>

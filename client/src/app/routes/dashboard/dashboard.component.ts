@@ -11,6 +11,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class DashboardComponent implements OnInit {
   isVisible = false;
+  allmanufacturers: any[]
   currentMeter = {
     "_id": "",
     "created_at": "",
@@ -81,6 +82,7 @@ export class DashboardComponent implements OnInit {
       description: [null, [Validators.required]],
       manufacturer_id: [null]
     });
+    this.fetchManufacturers()
     this.fetchMeters()
   }
 
@@ -115,5 +117,13 @@ export class DashboardComponent implements OnInit {
     this.http.post('http://localhost:3001/v1/smart-devices/delete', {"_id": id}).subscribe((res: any[]) => {
     });
     this.message.info(`Meter ${id} Deleted`)
+  }
+
+
+  fetchManufacturers() {
+    this.http.get('http://localhost:3001/v1/manufacturers/').subscribe((res: any[]) => {
+    console.log(res)
+    this.allmanufacturers = res
+  });
   }
 }
