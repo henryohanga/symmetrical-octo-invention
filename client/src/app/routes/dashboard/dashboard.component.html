@@ -1,30 +1,4 @@
 <page-header></page-header>
-<!-- <nz-table #basicTable [nzData]="dataSet"
-nzTitle="This is title" class="ant-table-rep__hide-header-footer">
-<thead>
-  <tr>
-    <th>Name</th>
-    <th>Age</th>
-    <th>Address</th>
-  </tr>
-</thead>
-<tbody>
-  <tr *ngFor="let data of basicTable.data">
-    <td>
-      <span class="ant-table-rep__title">Name</span>
-      {{data.name}}
-    </td>
-    <td>
-      <span class="ant-table-rep__title">Age</span>
-      {{data.age}}
-    </td>
-    <td>
-      <span class="ant-table-rep__title">Address</span>
-      {{data.address}}
-    </td>
-  </tr>
-</tbody>
-</nz-table> -->
   <full-content (fullscreenChange)="fullChange($event)">
     <nz-card>
       <div nz-row class="mb-md">
@@ -58,7 +32,7 @@ nzTitle="This is title" class="ant-table-rep__hide-header-footer">
       </div>
       <st
         #st
-        [data]="url"
+        [data]="smartmeters"
         [req]="{ params: args }"
         [res]="{ reName: { list: 'results' } }"
         [total]="total"
@@ -80,16 +54,13 @@ nzTitle="This is title" class="ant-table-rep__hide-header-footer">
       </st>
     </nz-card>
   </full-content>
-  <nz-modal 
-  [(nzVisible)]="isVisible" 
-  nzTitle="Edit Smart Meter" 
-  (nzOnCancel)="handleCancel()" 
+  <nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Edit Smart Meter"
+  (nzOnCancel)="handleCancel()"
   (nzOnOk)="handleOk()"
   [nzFooter]="modalFooter"
   >
-    <!-- <p>
-      {{currentMeter | json}}
-      </p> -->
       <form nz-form [formGroup]="validateForm" (ngSubmit)="updateForm()">
         <nz-form-item>
           <nz-form-control nzErrorTip="Please input serial number!">
@@ -120,4 +91,3 @@ nzTitle="This is title" class="ant-table-rep__hide-header-footer">
         <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading">Update</button>
       </ng-template>
   </nz-modal>
-  
