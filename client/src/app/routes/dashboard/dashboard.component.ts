@@ -63,7 +63,7 @@ export class DashboardComponent implements OnInit {
         {
           text: 'Delete',
           type: 'del',
-          click: item => this.message.info(`deleted [${item.id.value}]`),
+          click: item => this.deleteMeter(item._id),
         },
       ],
     },
@@ -109,6 +109,11 @@ export class DashboardComponent implements OnInit {
     // console.log(res)
     this.smartmeters = res
   });
+  }
 
+  deleteMeter(id) {
+    this.http.post('http://localhost:3001/v1/smart-devices/delete', {"_id": id}).subscribe((res: any[]) => {
+    });
+    this.message.info(`Meter ${id} Deleted`)
   }
 }
