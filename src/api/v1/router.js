@@ -2,6 +2,8 @@ const express = require('express');
 const fileRoutes = require('./files/routes');
 const userRoutes = require('./user/routes');
 const deviceRouters = require('./smart-devices/routes')
+const manufacturerRouters = require('./manufacturer/routes')
+
 const router = express.Router();
 
 /**
@@ -30,5 +32,7 @@ router.use('/files', fileRoutes);
  */
 
 router.use('/smart-devices', deviceRouters);
+router.use('/manufacturers', manufacturerRouters);
+
 
 module.exports = router;
