@@ -110,13 +110,8 @@ exports.refreshToken = async (req, res, next) => {
   }
 };
 
-/**
- * Login with an existing user
- * @public
- */
 exports.device = async (req, res, next) => {
   try {
-    // console.log(req.body)
     const {
       id,
     } = req.body;

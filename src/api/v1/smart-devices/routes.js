@@ -36,7 +36,7 @@ const routes = express.Router();
 
 // routes.route('/').get(validate(users), authorize(), controller.users);
 routes.route('/').get(controller.devices);
-routes.route('/device/:id').post(controller.device);
+routes.route('/device/:id').get(controller.device);
 
 /**
  * @api {post} v1/user/register Register user
