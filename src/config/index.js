@@ -2,6 +2,8 @@ require('dotenv').config();
 
 /** Default config will remain same in all environments and can be over-ridded */
 let config = {
+  PAPER_TRAIL_HOST: process.env.PAPER_TRAIL_HOST,
+  PAPER_TRAIL_PORT: process.env.PAPER_TRAIL_PORT,
   allowedMedia: ['jpg', 'jpeg', 'png', 'gif', 'avi', 'mov', '3gp', 'mp4', 'mkv', 'mpeg', 'mpg', 'mp3', 'pdf'],
   baseUrl: 'http://localhost:3001',
   ddosConfig: {

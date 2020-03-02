@@ -7,6 +7,7 @@ const Ddos = require('ddos');
 const ExpressLogs = require('express-server-logs');
 const routes = require('./api/v1/router');
 const error = require('./middlewares/error');
+const { httpLogger } = require('./middlewares');
 const {
   whitelist, ddosConfig,
 } = require('./config');
@@ -39,7 +40,8 @@ server.use(ddosInstance.express);
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
 
-server.use(xlogs.logger);
+// server.use(xlogs.logger);
+server.use(httpLogger);
 
 // gzip compression
 server.use(compress());
